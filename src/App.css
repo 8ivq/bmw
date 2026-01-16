@@ -12,20 +12,52 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 5%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled {
+  padding: 1rem 5%;
+  background: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid rgba(0, 102, 177, 0.3);
+  box-shadow: 0 5px 30px rgba(0, 102, 177, 0.2);
 }
 
 .nav-logo {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.5rem;
-  background: linear-gradient(135deg, #fff, #0066b1);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: flex;
+  gap: 0.1rem;
+}
+
+.logo-b, .logo-m, .logo-w {
+  transition: all 0.3s ease;
+}
+
+.logo-b {
+  color: #fff;
+}
+
+.logo-m {
+  color: #0066b1;
+}
+
+.logo-w {
+  color: #fff;
+}
+
+.nav-logo:hover .logo-b,
+.nav-logo:hover .logo-m,
+.nav-logo:hover .logo-w {
+  transform: translateY(-5px);
+}
+
+.nav-logo:hover .logo-m {
+  color: #00a8ff;
 }
 
 .nav-links {
@@ -191,6 +223,75 @@
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  animation: fadeInUp 1s ease 0.6s backwards;
+}
+
+.scroll-arrow {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+/* Models Preview Section */
+.models-preview {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 5%;
+  background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff, #0066b1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Contact Section */
+.contact-section {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 5%;
+  background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
 }
 
 /* Footer */
