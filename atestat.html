@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMW — Sheer Driving Pleasure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bmw-blue: #1C69D4;
+      --bmw-dark: #0a0a0a;
+      --bmw-charcoal: #111318;
+      --bmw-mid: #1a1d24;
+      --bmw-light: #e8e8e8;
+      --bmw-white: #f5f5f0;
+      --bmw-silver: #9aa0ad;
+      --bmw-gold: #c9a96e;
+      --accent: #1C69D4;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bmw-dark);
+      color: var(--bmw-white);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── CURSOR ─── */
+    body { cursor: none; }
+    #cursor {
+      position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+      background: var(--bmw-blue); border-radius: 50%; pointer-events: none;
+      z-index: 9999; transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s, height 0.3s, background 0.3s;
+      mix-blend-mode: screen;
+    }
+    #cursor.hover { width: 40px; height: 40px; background: rgba(28,105,212,0.3); border: 1px solid var(--bmw-blue); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 5vw;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(20px); }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo svg { width: 52px; height: 52px; }
+    .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.4em; color: var(--bmw-silver); text-transform: uppercase; }
+    .nav-links { display: flex; gap: 3rem; }
+    .nav-links a {
+      text-decoration: none; color: var(--bmw-silver); font-size: 0.85rem;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--bmw-blue); transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--bmw-white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; display: flex; align-items: center;
+      justify-content: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 50%, rgba(28,105,212,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(28,105,212,0.06) 0%, transparent 60%),
+        linear-gradient(135deg, #050508 0%, #0d1018 40%, #060a14 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(28,105,212,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28,105,212,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      animation: heroReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes heroReveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    .hero-eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.5em; color: var(--bmw-blue);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--bmw-blue); opacity: 0.5;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 300; line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .accent { color: var(--bmw-blue); font-style: italic; }
+    .hero-subtitle {
+      margin-top: 2rem; font-size: 1.1rem; letter-spacing: 0.3em;
+      color: var(--bmw-silver); text-transform: uppercase; font-weight: 400;
+    }
+    .hero-cta {
+      margin-top: 3.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block; padding: 1rem 2.5rem;
+      background: var(--bmw-blue); color: white;
+      text-decoration: none; font-size: 0.85rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 600;
+      transition: all 0.3s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-primary:hover { background: #2476e8; transform: translateY(-2px); box-shadow: 0 20px 40px rgba(28,105,212,0.4); }
+    .btn-outline {
+      display: inline-block; padding: 1rem 2.5rem;
+      border: 1px solid rgba(255,255,255,0.2); color: var(--bmw-white);
+      text-decoration: none; font-size: 0.85rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 500;
+      transition: all 0.3s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-outline:hover { border-color: var(--bmw-blue); color: var(--bmw-blue); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--bmw-silver); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .hero-scroll::after {
+      content: ''; width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--bmw-silver), transparent);
+    }
+    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    /* ─── LOGO SVG ─── */
+    .bmw-roundel { animation: spin 30s linear infinite; transform-origin: center; }
+
+    /* ─── SECTION BASE ─── */
+    section { position: relative; }
+    .section-header {
+      text-align: center; margin-bottom: 5rem;
+    }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.5em; color: var(--bmw-blue);
+      text-transform: uppercase; margin-bottom: 1rem; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+    }
+    .section-title em { color: var(--bmw-blue); font-style: italic; }
+
+    /* ─── ABOUT / STORIA ─── */
+    #about {
+      padding: 10rem 5vw;
+      background: linear-gradient(to bottom, var(--bmw-dark), var(--bmw-charcoal));
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8rem;
+      align-items: center; max-width: 1300px; margin: 0 auto;
+    }
+    .about-text p {
+      font-size: 1.05rem; line-height: 1.9; color: var(--bmw-silver);
+      margin-bottom: 1.5rem;
+    }
+    .about-text p strong { color: var(--bmw-white); font-weight: 600; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .stat-card {
+      padding: 2rem; border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card:hover { border-color: var(--bmw-blue); transform: translateY(-4px); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300; color: var(--bmw-blue);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; letter-spacing: 0.2em; color: var(--bmw-silver); text-transform: uppercase; margin-top: 0.5rem; }
+
+    /* ─── MODELS ─── */
+    #models {
+      padding: 10rem 5vw;
+      background: var(--bmw-charcoal);
+    }
+    .models-container { max-width: 1400px; margin: 0 auto; }
+    .models-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    }
+    .model-card {
+      position: relative; overflow: hidden; aspect-ratio: 4/5;
+      background: var(--bmw-mid); cursor: pointer;
+    }
+    .model-card::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+      transition: opacity 0.5s;
+    }
+    .model-card:hover::before { opacity: 0.7; }
+    .model-visual {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .model-card:hover .model-visual { transform: scale(1.06); }
+    .model-silhouette { width: 80%; opacity: 0.15; transition: opacity 0.5s; }
+    .model-card:hover .model-silhouette { opacity: 0.25; }
+    .model-gradient {
+      position: absolute; inset: 0;
+      transition: opacity 0.5s;
+    }
+    .model-info {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      padding: 2.5rem;
+      transform: translateY(20px); opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
+    }
+    .model-card:hover .model-info { transform: translateY(0); opacity: 1; }
+    .model-series {
+      font-size: 0.7rem; letter-spacing: 0.4em; color: var(--bmw-blue);
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .model-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .model-spec {
+      font-size: 0.8rem; color: var(--bmw-silver); letter-spacing: 0.1em;
+      display: flex; gap: 2rem;
+    }
+    .model-tag {
+      position: absolute; top: 2rem; right: 2rem; z-index: 2;
+      background: var(--bmw-blue); color: white;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.4rem 1rem; font-weight: 600;
+    }
+    .model-always-visible {
+      position: absolute; bottom: 2rem; left: 2.5rem; z-index: 2;
+    }
+    .model-title-always {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300;
+    }
+    .model-sub-always {
+      font-size: 0.7rem; letter-spacing: 0.3em; color: var(--bmw-silver); text-transform: uppercase;
+    }
+
+    /* ─── TECHNOLOGY ─── */
+    #technology {
+      padding: 10rem 5vw;
+      background: linear-gradient(to bottom, var(--bmw-charcoal), var(--bmw-dark));
+    }
+    .tech-container { max-width: 1300px; margin: 0 auto; }
+    .tech-tabs {
+      display: flex; gap: 0; margin-bottom: 5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .tech-tab {
+      padding: 1.2rem 2.5rem; font-size: 0.8rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--bmw-silver); cursor: pointer;
+      background: none; border: none; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; transition: all 0.3s; font-family: 'Rajdhani', sans-serif;
+      font-weight: 500;
+    }
+    .tech-tab.active { color: var(--bmw-white); border-bottom-color: var(--bmw-blue); }
+    .tech-panel { display: none; }
+    .tech-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .tech-visual {
+      position: relative; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tech-ring {
+      position: absolute; border-radius: 50%; border: 1px solid;
+      animation: techRotate 20s linear infinite;
+    }
+    .tech-ring:nth-child(1) { width: 90%; height: 90%; border-color: rgba(28,105,212,0.3); }
+    .tech-ring:nth-child(2) { width: 70%; height: 70%; border-color: rgba(28,105,212,0.2); animation-duration: 15s; animation-direction: reverse; }
+    .tech-ring:nth-child(3) { width: 50%; height: 50%; border-color: rgba(28,105,212,0.15); animation-duration: 25s; }
+    @keyframes techRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .tech-icon-center {
+      font-size: 4rem; color: var(--bmw-blue); z-index: 1;
+    }
+    .tech-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .tech-content p {
+      font-size: 1rem; line-height: 1.9; color: var(--bmw-silver); margin-bottom: 1.5rem;
+    }
+    .tech-features { list-style: none; }
+    .tech-features li {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem; color: var(--bmw-silver);
+    }
+    .tech-features li::before {
+      content: ''; width: 6px; height: 6px; background: var(--bmw-blue);
+      border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* ─── CONFIGURATOR ─── */
+    #configurator {
+      padding: 10rem 5vw;
+      background: var(--bmw-dark);
+    }
+    .config-container {
+      max-width: 1300px; margin: 0 auto;
+      display: grid; grid-template-columns: 340px 1fr; gap: 4rem; align-items: start;
+    }
+    .config-panel {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); padding: 2.5rem;
+    }
+    .config-section { margin-bottom: 2.5rem; }
+    .config-section h4 {
+      font-size: 0.7rem; letter-spacing: 0.4em; color: var(--bmw-blue);
+      text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .color-swatches { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .swatch {
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: all 0.2s;
+    }
+    .swatch.selected, .swatch:hover { border-color: var(--bmw-white); transform: scale(1.1); }
+    .config-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .config-opt {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+    }
+    .config-opt.selected { border-color: var(--bmw-blue); background: rgba(28,105,212,0.08); }
+    .config-opt:hover { border-color: rgba(28,105,212,0.5); }
+    .config-opt span { color: var(--bmw-silver); font-size: 0.75rem; }
+    .config-preview {
+      position: relative; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0d1018 0%, #111620 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .config-car-display {
+      width: 85%; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .config-info {
+      margin-top: 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    }
+    .config-spec {
+      text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.07);
+    }
+    .config-spec-val {
+      font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+      font-weight: 300; color: var(--bmw-blue);
+    }
+    .config-spec-key { font-size: 0.7rem; color: var(--bmw-silver); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.3rem; }
+
+    /* ─── HERITAGE ─── */
+    #heritage {
+      padding: 10rem 5vw;
+      background: linear-gradient(to bottom, var(--bmw-dark), var(--bmw-charcoal));
+    }
+    .timeline { max-width: 900px; margin: 0 auto; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--bmw-blue), transparent);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0;
+      align-items: center; margin-bottom: 4rem;
+    }
+    .timeline-item:nth-child(odd) .timeline-left { text-align: right; padding-right: 3rem; }
+    .timeline-item:nth-child(odd) .timeline-right { padding-left: 3rem; opacity: 0; }
+    .timeline-item:nth-child(even) .timeline-left { opacity: 0; }
+    .timeline-item:nth-child(even) .timeline-right { padding-left: 3rem; }
+    .timeline-item:nth-child(even) .timeline-left + .timeline-dot + .timeline-right { }
+    .timeline-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--bmw-blue); margin: 0 auto;
+      box-shadow: 0 0 20px rgba(28,105,212,0.5);
+    }
+    .timeline-year {
+      font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300;
+      color: var(--bmw-blue); line-height: 1;
+    }
+    .timeline-desc {
+      font-size: 0.9rem; color: var(--bmw-silver); line-height: 1.7; margin-top: 0.5rem;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 10rem 5vw;
+      background: var(--bmw-charcoal);
+      text-align: center;
+    }
+    .contact-inner { max-width: 700px; margin: 0 auto; }
+    .contact-inner p {
+      font-size: 1.1rem; color: var(--bmw-silver); line-height: 1.9; margin-bottom: 3rem;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-field label {
+      font-size: 0.7rem; letter-spacing: 0.3em; color: var(--bmw-silver); text-transform: uppercase;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--bmw-white); padding: 1rem 1.2rem; font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem; transition: border-color 0.3s; resize: none; outline: none;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      border-color: var(--bmw-blue);
+    }
+    .form-field select option { background: var(--bmw-charcoal); }
+    .form-submit {
+      align-self: flex-start;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 4rem 5vw 2rem; background: var(--bmw-dark);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand p {
+      font-size: 0.9rem; color: var(--bmw-silver); line-height: 1.8; margin-top: 1.2rem; max-width: 280px;
+    }
+    .footer-col h5 {
+      font-size: 0.7rem; letter-spacing: 0.3em; color: var(--bmw-blue);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .footer-col a {
+      display: block; text-decoration: none; color: var(--bmw-silver);
+      font-size: 0.9rem; margin-bottom: 0.8rem; transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--bmw-white); }
+    .footer-bottom {
+      padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem; color: rgba(154,160,173,0.6);
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── LOADING ─── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9998;
+      background: var(--bmw-dark);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 2rem;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    .loader-bar {
+      width: 200px; height: 1px; background: rgba(255,255,255,0.1); overflow: hidden;
+    }
+    .loader-progress {
+      height: 100%; width: 0; background: var(--bmw-blue);
+      animation: loadProgress 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes loadProgress { from { width: 0; } to { width: 100%; } }
+
+    @media (max-width: 1024px) {
+      .about-grid, .config-container { grid-template-columns: 1fr; }
+      .models-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .models-grid { grid-template-columns: 1fr; }
+      .tech-panel.active { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item { grid-template-columns: 40px 1fr; }
+      .config-info { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(28,105,212,0.3)" stroke-width="1"/>
+      <path d="M40 2 A38 38 0 0 1 78 40" fill="none" stroke="#1C69D4" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="22" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <text x="40" y="36" text-anchor="middle" font-family="Rajdhani" font-size="9" fill="#9aa0ad" letter-spacing="3">BMW</text>
+      <text x="40" y="50" text-anchor="middle" font-family="Cormorant Garamond" font-size="6" fill="#1C69D4" letter-spacing="2">MÜNCHEN</text>
+    </svg>
+  </div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">
+    <svg viewBox="0 0 52 52" fill="none">
+      <circle cx="26" cy="26" r="25" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <circle cx="26" cy="26" r="18" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <path d="M26 1 A25 25 0 0 1 51 26 L26 26 Z" fill="white"/>
+      <path d="M26 26 L51 26 A25 25 0 0 1 26 51 Z" fill="#1C69D4"/>
+      <path d="M26 51 A25 25 0 0 1 1 26 L26 26 Z" fill="white"/>
+      <path d="M26 26 L1 26 A25 25 0 0 1 26 1 Z" fill="#1C69D4"/>
+    </svg>
+    <span class="nav-brand">BMW AG</span>
+  </div>
+  <div class="nav-links">
+    <a href="#models">Modele</a>
+    <a href="#technology">Tehnologie</a>
+    <a href="#heritage">Istorie</a>
+    <a href="#configurator">Configurator</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bayerische Motoren Werke</div>
+    <h1 class="hero-title">Sheer<br><span class="accent">Driving</span><br>Pleasure</h1>
+    <p class="hero-subtitle">Perfecțiunea în mișcare din 1916</p>
+    <div class="hero-cta">
+      <a href="#models" class="btn-primary">Explorează Modelele</a>
+      <a href="#heritage" class="btn-outline">Povestea Noastră</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-header" style="text-align:left; margin-bottom: 3rem;">
+        <span class="section-label">Despre Noi</span>
+        <h2 class="section-title">Mai mult decât<br>un <em>automobil</em></h2>
+      </div>
+      <p>BMW a fost fondată în <strong>1916</strong> la München, Germania, inițial ca producător de motoare de avioane. De-a lungul unui secol de inovație neîntreruptă, compania a evoluat pentru a deveni unul dintre cei mai respectați producători de automobile premium din lume.</p>
+      <p>Filosofia <strong>„Sheer Driving Pleasure"</strong> nu este doar un slogan — este o promisiune. Fiecare vehicul BMW este proiectat pentru a oferi o conexiune unică între șofer, mașină și drum, combinând performanța atletică cu luxul rafinat.</p>
+      <p>Astăzi, BMW Group include <strong>BMW, MINI și Rolls-Royce</strong>, cu fabrici în peste 15 țări și o prezență globală în peste 140 de piețe.</p>
+      <div style="margin-top: 2.5rem;">
+        <a href="#models" class="btn-primary">Descoperă Modelele</a>
+      </div>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-number">107</div>
+        <div class="stat-label">Ani de inovație</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2.4M</div>
+        <div class="stat-label">Vehicule vândute / an</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">149</div>
+        <div class="stat-label">Piețe globale</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">118K</div>
+        <div class="stat-label">Angajați la nivel global</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section id="models">
+  <div class="models-container">
+    <div class="section-header reveal" style="padding: 0 5vw; padding-top: 10rem;">
+      <span class="section-label">Gama de Modele</span>
+      <h2 class="section-title">Alege-ți <em>perfecțiunea</em></h2>
+    </div>
+    <div class="models-grid">
+      <!-- M3 -->
+      <div class="model-card">
+        <div class="model-tag">M Performance</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#0a0e16,#0d1520);">
+          <svg viewBox="0 0 400 200" class="model-silhouette" fill="white">
+            <path d="M30 140 L60 100 Q80 80 130 75 L200 70 Q240 68 270 80 L340 95 L370 130 L380 140 L360 148 Q340 155 310 148 L280 145 L120 145 L90 148 Q60 155 40 148 Z"/>
+            <ellipse cx="100" cy="148" rx="22" ry="14"/>
+            <ellipse cx="300" cy="148" rx="22" ry="14"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 60% 40%, rgba(28,105,212,0.2),transparent 70%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">Seria 3</div>
+          <div class="model-title-always">BMW M3</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">M Series · Competition</div>
+          <div class="model-name">BMW M3<br>Competition</div>
+          <div class="model-spec">
+            <span>510 CP</span><span>3.7s 0-100</span><span>3.0L Twin-Turbo</span>
+          </div>
+        </div>
+      </div>
+      <!-- X5 -->
+      <div class="model-card">
+        <div class="model-tag">SAV</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#0e0d10,#151318);">
+          <svg viewBox="0 0 400 220" class="model-silhouette" fill="white">
+            <path d="M25 155 L50 105 Q65 82 110 76 L200 70 Q245 68 275 80 L345 100 L375 140 L385 155 L370 162 Q350 170 320 162 L290 158 L110 158 L80 162 Q50 170 30 162 Z"/>
+            <ellipse cx="100" cy="160" rx="24" ry="16"/>
+            <ellipse cx="305" cy="160" rx="24" ry="16"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 40% 50%, rgba(201,169,110,0.1),transparent 70%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">Sports Activity Vehicle</div>
+          <div class="model-title-always">BMW X5</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">X Series · xDrive50e</div>
+          <div class="model-name">BMW X5<br>xDrive50e</div>
+          <div class="model-spec">
+            <span>489 CP</span><span>4.6s 0-100</span><span>Plug-in Hybrid</span>
+          </div>
+        </div>
+      </div>
+      <!-- i7 -->
+      <div class="model-card">
+        <div class="model-tag">Electric</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#080d14,#0a1420);">
+          <svg viewBox="0 0 400 200" class="model-silhouette" fill="white">
+            <path d="M20 142 L50 98 Q70 78 120 73 L200 68 Q250 66 285 78 L360 95 L385 130 L388 142 L370 150 Q350 158 320 150 L280 146 L115 146 L80 150 Q50 158 30 150 Z"/>
+            <ellipse cx="98" cy="148" rx="20" ry="13"/>
+            <ellipse cx="305" cy="148" rx="20" ry="13"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 50% 30%, rgba(28,105,212,0.25),transparent 65%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">Seria 7 · Electric</div>
+          <div class="model-title-always">BMW i7</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">i Series · xDrive60</div>
+          <div class="model-name">BMW i7<br>xDrive60</div>
+          <div class="model-spec">
+            <span>544 CP</span><span>4.7s 0-100</span><span>625 km autonomie</span>
+          </div>
+        </div>
+      </div>
+      <!-- M8 -->
+      <div class="model-card">
+        <div class="model-tag">Gran Coupé</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#0c0808,#1a0f0a);">
+          <svg viewBox="0 0 400 180" class="model-silhouette" fill="white">
+            <path d="M30 138 L55 90 Q78 68 135 63 L200 60 Q260 58 295 70 L365 90 L385 128 L388 138 L372 145 Q352 153 318 145 L280 142 L115 142 L80 145 Q52 153 35 145 Z"/>
+            <ellipse cx="102" cy="144" rx="19" ry="12"/>
+            <ellipse cx="302" cy="144" rx="19" ry="12"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 55% 40%, rgba(180,30,30,0.12),transparent 70%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">M Series</div>
+          <div class="model-title-always">BMW M8</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">M Series · Gran Coupé</div>
+          <div class="model-name">BMW M8<br>Gran Coupé</div>
+          <div class="model-spec">
+            <span>625 CP</span><span>3.2s 0-100</span><span>4.4L V8 Biturbo</span>
+          </div>
+        </div>
+      </div>
+      <!-- Z4 -->
+      <div class="model-card">
+        <div class="model-tag">Roadster</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#090e0e,#0d1818);">
+          <svg viewBox="0 0 400 170" class="model-silhouette" fill="white">
+            <path d="M50 135 L80 88 Q110 65 160 62 L225 60 Q275 60 305 72 L360 95 L380 130 L382 135 L370 142 Q350 148 320 142 L285 138 L105 138 L72 142 Q50 148 52 138 Z"/>
+            <ellipse cx="100" cy="140" rx="17" ry="11"/>
+            <ellipse cx="305" cy="140" rx="17" ry="11"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 45% 45%, rgba(40,160,120,0.1),transparent 65%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">Z Series</div>
+          <div class="model-title-always">BMW Z4</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">Z Series · M40i</div>
+          <div class="model-name">BMW Z4<br>M40i Roadster</div>
+          <div class="model-spec">
+            <span>340 CP</span><span>4.5s 0-100</span><span>3.0L Turbo</span>
+          </div>
+        </div>
+      </div>
+      <!-- iX -->
+      <div class="model-card">
+        <div class="model-tag">Electric SAV</div>
+        <div class="model-visual" style="background: linear-gradient(135deg,#080b10,#0d1218);">
+          <svg viewBox="0 0 400 210" class="model-silhouette" fill="white">
+            <path d="M22 150 L48 102 Q64 80 108 74 L200 68 Q245 66 278 78 L348 96 L378 135 L385 150 L370 158 Q348 166 318 158 L285 154 L110 154 L75 158 Q48 166 25 158 Z"/>
+            <ellipse cx="98" cy="157" rx="23" ry="15"/>
+            <ellipse cx="308" cy="157" rx="23" ry="15"/>
+          </svg>
+          <div class="model-gradient" style="background: radial-gradient(ellipse at 50% 35%, rgba(28,105,212,0.18),transparent 65%)"></div>
+        </div>
+        <div class="model-always-visible">
+          <div class="model-sub-always">i Series · Electric</div>
+          <div class="model-title-always">BMW iX</div>
+        </div>
+        <div class="model-info">
+          <div class="model-series">i Series · xDrive50</div>
+          <div class="model-name">BMW iX<br>xDrive50</div>
+          <div class="model-spec">
+            <span>523 CP</span><span>4.6s 0-100</span><span>630 km autonomie</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+  <div class="tech-container">
+    <div class="section-header reveal">
+      <span class="section-label">Inovație</span>
+      <h2 class="section-title">Tehnologie <em>de vârf</em></h2>
+    </div>
+    <div class="tech-tabs">
+      <button class="tech-tab active" data-tab="powertrain">Grupuri Motopropulsoare</button>
+      <button class="tech-tab" data-tab="electric">Mobilitate Electrică</button>
+      <button class="tech-tab" data-tab="digital">BMW iDrive</button>
+      <button class="tech-tab" data-tab="safety">Siguranță Activă</button>
+    </div>
+    <!-- Powertrain -->
+    <div class="tech-panel active" id="tab-powertrain">
+      <div class="tech-visual">
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-icon-center">⚙️</div>
+      </div>
+      <div class="tech-content">
+        <h3>Inginerie de înaltă performanță</h3>
+        <p>Motoarele BMW sunt rezultatul a peste un secol de experiență în inginerie aeronautică și auto. Fiecare propulsor este proiectat pentru a oferi o combinație optimă de putere, eficiență și plăcere de condus.</p>
+        <p>Tehnologia TwinPower Turbo, prezentă în aproape toată gama, utilizează turbinele cu geometrie variabilă și injecția directă pentru a maximiza performanța la orice turație.</p>
+        <ul class="tech-features">
+          <li>TwinPower Turbo cu geometrie variabilă</li>
+          <li>Injecție directă de precizie (High Precision Injection)</li>
+          <li>Valve control complet variabil (VALVETRONIC)</li>
+          <li>Transmisie automată Steptronic cu până la 8 rapoarte</li>
+          <li>Sistem xDrive cu tracțiune integrală inteligentă</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Electric -->
+    <div class="tech-panel" id="tab-electric">
+      <div class="tech-visual">
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-icon-center">⚡</div>
+      </div>
+      <div class="tech-content">
+        <h3>Viitorul mobilității electrice</h3>
+        <p>BMW eDrive reprezintă viziunea companiei pentru mobilitatea sustenabilă fără compromisuri. Platforma NEUE KLASSE, lansată în 2025, aduce o nouă generație de vehicule electrice cu autonomie extinsă și încărcare ultra-rapidă.</p>
+        <p>Bateriile de generație a 6-a cu chimie NMC9 oferă densitate energetică superioară, reducând greutatea și crescând autonomia cu până la 30% față de generația anterioară.</p>
+        <ul class="tech-features">
+          <li>Baterie de generație a 6-a (NMC9)</li>
+          <li>Încărcare rapidă DC până la 200 kW</li>
+          <li>Autonomie de până la 700 km (WLTP)</li>
+          <li>Recuperare de energie prin frânare regenerativă</li>
+          <li>Platformă dedicată NEUE KLASSE (din 2025)</li>
+        </ul>
+      </div>
+    </div>
+    <!-- iDrive -->
+    <div class="tech-panel" id="tab-digital">
+      <div class="tech-visual">
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-icon-center">🖥️</div>
+      </div>
+      <div class="tech-content">
+        <h3>BMW iDrive 9 — Inteligența la volan</h3>
+        <p>Sistemul iDrive a revoluționat interacțiunea șofer-vehicul în 2001 și continuă să se reinventeze. Versiunea 9, cu ecrane curbate de 14,9" și 12,3", oferă o experiență digitală fără precedent.</p>
+        <p>Asistentul personal BMW, alimentat de inteligență artificială, înțelege comenzile vocale complexe, anticipează nevoile șoferului și se actualizează Over-the-Air.</p>
+        <ul class="tech-features">
+          <li>BMW Curved Display (14.9" + 12.3")</li>
+          <li>Asistent personal BMW cu AI generativă</li>
+          <li>Actualizări Over-the-Air (OTA) continue</li>
+          <li>BMW Digital Key Plus (UWB)</li>
+          <li>Augmented Reality Head-Up Display</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Safety -->
+    <div class="tech-panel" id="tab-safety">
+      <div class="tech-visual">
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-ring"></div>
+        <div class="tech-icon-center">🛡️</div>
+      </div>
+      <div class="tech-content">
+        <h3>Siguranță activă și pasivă</h3>
+        <p>BMW Driving Assistant Professional combină camere, radare și senzori LiDAR pentru a crea o bulă de protecție completă în jurul vehiculului, prevenind accidentele înainte ca ele să se producă.</p>
+        <p>Sistemul de condus semi-autonom de nivel 3 (disponibil pe i7 și Seria 7) permite șoferului să elibereze volanul în condiții de trafic controlate.</p>
+        <ul class="tech-features">
+          <li>BMW Driving Assistant Professional (L2+)</li>
+          <li>Condus semi-autonom de nivel 3 (i7, Seria 7)</li>
+          <li>Emergency Stop Assistant</li>
+          <li>BMW Personal CoPilot (AI)</li>
+          <li>Protecție 360° cu camere perimetrale HD</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIGURATOR -->
+<section id="configurator">
+  <div class="section-header reveal" style="padding: 0 5vw; padding-top: 0; margin-bottom: 4rem;">
+    <span class="section-label">Personalizare</span>
+    <h2 class="section-title">Creează-ți <em>BMW-ul ideal</em></h2>
+  </div>
+  <div class="config-container">
+    <div class="config-panel reveal">
+      <div class="config-section">
+        <h4>Model</h4>
+        <div class="config-options" id="model-opts">
+          <div class="config-opt selected" data-model="M3" onclick="selectModel(this,'M3','510','3.7','3.0L I6','Benzină')">BMW M3 Competition <span>510 CP</span></div>
+          <div class="config-opt" data-model="X5" onclick="selectModel(this,'X5','489','4.6','PHEV','Hybrid')">BMW X5 xDrive50e <span>489 CP</span></div>
+          <div class="config-opt" data-model="i7" onclick="selectModel(this,'i7','544','4.7','Electric','Electric')">BMW i7 xDrive60 <span>544 CP</span></div>
+          <div class="config-opt" data-model="M8" onclick="selectModel(this,'M8','625','3.2','4.4L V8','Benzină')">BMW M8 Gran Coupé <span>625 CP</span></div>
+        </div>
+      </div>
+      <div class="config-section">
+        <h4>Culoare Exterioară</h4>
+        <div class="color-swatches">
+          <div class="swatch selected" style="background:#1a1a1f" title="Carbon Black" onclick="selectColor(this,'#1a1a1f')"></div>
+          <div class="swatch" style="background:#e8e8e4" title="Alpine White" onclick="selectColor(this,'#e8e8e4')"></div>
+          <div class="swatch" style="background:#1C69D4" title="Portimão Blue" onclick="selectColor(this,'#1C69D4')"></div>
+          <div class="swatch" style="background:#7d8085" title="Dravit Grey" onclick="selectColor(this,'#7d8085')"></div>
+          <div class="swatch" style="background:#c9a96e" title="Frozen Gold" onclick="selectColor(this,'#c9a96e')"></div>
+          <div class="swatch" style="background:#8b1a1a" title="Toronto Red" onclick="selectColor(this,'#8b1a1a')"></div>
+        </div>
+      </div>
+      <div class="config-section">
+        <h4>Tapițerie Interior</h4>
+        <div class="config-options" id="interior-opts">
+          <div class="config-opt selected" onclick="selectInterior(this,'Merino Negru')">Merino Negru <span>Standard</span></div>
+          <div class="config-opt" onclick="selectInterior(this,'Merino Cognac')">Merino Cognac <span>+€1,200</span></div>
+          <div class="config-opt" onclick="selectInterior(this,'Alcantara Sport')">Alcantara Sport <span>+€900</span></div>
+        </div>
+      </div>
+      <div class="config-section">
+        <h4>Pachet Opțional</h4>
+        <div class="config-options" id="pack-opts">
+          <div class="config-opt selected" onclick="selectPack(this,'Standard')">Fără pachet <span>Standard</span></div>
+          <div class="config-opt" onclick="selectPack(this,'M Carbon Package')">M Carbon Package <span>+€4,500</span></div>
+          <div class="config-opt" onclick="selectPack(this,'Driving Assistant Pro')">Driving Assistant Pro <span>+€2,800</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="config-preview" id="config-preview">
+        <svg id="config-car" viewBox="0 0 600 300" class="config-car-display">
+          <defs>
+            <radialGradient id="bodyGrad" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#2a2a30" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#0a0a10"/>
+            </radialGradient>
+          </defs>
+          <!-- Car body -->
+          <path id="car-body" d="M60 210 L90 155 Q120 115 180 105 L300 98 Q380 96 430 115 L530 145 L565 195 L575 210 L560 218 Q540 228 500 218 L455 212 L145 212 L100 218 Q70 228 55 218 Z" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <!-- Windshield -->
+          <path d="M210 108 L230 155 L370 155 L390 108 Z" fill="rgba(28,105,212,0.4)" stroke="rgba(28,105,212,0.3)" stroke-width="1"/>
+          <!-- Rear window -->
+          <path d="M390 108 L410 155 L450 155 L440 108 Z" fill="rgba(28,105,212,0.3)" stroke="rgba(28,105,212,0.2)" stroke-width="1"/>
+          <!-- Kidney grille -->
+          <ellipse cx="310" cy="178" rx="55" ry="20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <line x1="310" y1="158" x2="310" y2="198" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <!-- Headlights -->
+          <path d="M95 165 Q110 158 130 162 L135 175 Q115 180 95 175 Z" fill="rgba(200,230,255,0.6)"/>
+          <path d="M465 165 Q485 158 510 162 L510 175 Q490 180 465 175 Z" fill="rgba(200,230,255,0.6)"/>
+          <!-- Wheels -->
+          <circle cx="165" cy="216" r="38" fill="#111" stroke="#333" stroke-width="2"/>
+          <circle cx="165" cy="216" r="28" fill="none" stroke="rgba(200,200,210,0.7)" stroke-width="1.5"/>
+          <circle cx="165" cy="216" r="10" fill="#222"/>
+          <!-- Spokes -->
+          <line x1="165" y1="188" x2="165" y2="244" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="137" y1="216" x2="193" y2="216" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="145" y1="196" x2="185" y2="236" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="185" y1="196" x2="145" y2="236" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+
+          <circle cx="440" cy="216" r="38" fill="#111" stroke="#333" stroke-width="2"/>
+          <circle cx="440" cy="216" r="28" fill="none" stroke="rgba(200,200,210,0.7)" stroke-width="1.5"/>
+          <circle cx="440" cy="216" r="10" fill="#222"/>
+          <line x1="440" y1="188" x2="440" y2="244" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="412" y1="216" x2="468" y2="216" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="420" y1="196" x2="460" y2="236" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <line x1="460" y1="196" x2="420" y2="236" stroke="rgba(200,200,210,0.5)" stroke-width="1.5"/>
+          <!-- Floor shadow -->
+          <ellipse cx="300" cy="255" rx="220" ry="12" fill="rgba(0,0,0,0.5)"/>
+          <!-- Model label -->
+          <text id="car-label" x="300" y="280" text-anchor="middle" font-family="Rajdhani" font-size="14" fill="rgba(154,160,173,0.6)" letter-spacing="4">BMW M3 COMPETITION</text>
+        </svg>
+        <div style="position:absolute;top:1.5rem;right:1.5rem;font-size:0.7rem;letter-spacing:0.3em;color:rgba(154,160,173,0.5);text-transform:uppercase;">Previzualizare</div>
+      </div>
+      <div class="config-info">
+        <div class="config-spec">
+          <div class="config-spec-val" id="spec-hp">510</div>
+          <div class="config-spec-key">CP / Putere</div>
+        </div>
+        <div class="config-spec">
+          <div class="config-spec-val" id="spec-acc">3.7s</div>
+          <div class="config-spec-key">0-100 km/h</div>
+        </div>
+        <div class="config-spec">
+          <div class="config-spec-val" id="spec-engine">3.0L I6</div>
+          <div class="config-spec-key">Motor</div>
+        </div>
+        <div class="config-spec">
+          <div class="config-spec-val" id="spec-fuel">Benzină</div>
+          <div class="config-spec-key">Combustibil</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERITAGE -->
+<section id="heritage">
+  <div class="section-header reveal">
+    <span class="section-label">Istoria BMW</span>
+    <h2 class="section-title">Un secol de <em>excelență</em></h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-year">1916</div>
+        <div class="timeline-desc">Fondarea BMW (Bayerische Motoren Werke) la München. Compania produce inițial motoare de avioane pentru Primul Război Mondial.</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right"></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right">
+        <div class="timeline-year">1929</div>
+        <div class="timeline-desc">BMW lansează primul său automobil sub sigla proprie — BMW 3/15 — după achiziționarea fabricii Fahrzeugfabrik Eisenach.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-year">1972</div>
+        <div class="timeline-desc">Crearea diviziei M GmbH (Motorsport). BMW 3.0 CSL dominates circuitele europene, punând bazele legendei M.</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right"></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right">
+        <div class="timeline-year">2001</div>
+        <div class="timeline-desc">Lansarea sistemului iDrive — o revoluție în interfața om-mașină. Totodată, BMW cumpără Rolls-Royce și consolidează grupul premium.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-year">2013</div>
+        <div class="timeline-desc">Lansarea BMW i3 și i8 — primele vehicule electrice ale gamei „i". BMW demonstrează că sustenabilitatea și performanța pot coexista.</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right"></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-right">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-desc">Lansarea platformei NEUE KLASSE — o nouă arhitectură electrică dedicată, care definește viitorul BMW pentru deceniile următoare.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">Contactează-ne</h2>
+    </div>
+    <p class="reveal">Echipa BMW România este la dispoziția ta pentru orice întrebare legată de modele, prețuri, configurații sau programarea unui test drive. Completează formularul și te vom contacta în cel mai scurt timp.</p>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Prenume</label>
+          <input type="text" placeholder="Ion" />
+        </div>
+        <div class="form-field">
+          <label>Nume</label>
+          <input type="text" placeholder="Popescu" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" placeholder="ion.popescu@email.ro" />
+        </div>
+        <div class="form-field">
+          <label>Telefon</label>
+          <input type="tel" placeholder="+40 700 000 000" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Model de Interes</label>
+        <select>
+          <option>BMW M3 Competition</option>
+          <option>BMW X5 xDrive50e</option>
+          <option>BMW i7 xDrive60</option>
+          <option>BMW M8 Gran Coupé</option>
+          <option>BMW Z4 M40i</option>
+          <option>BMW iX xDrive50</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Mesaj</label>
+        <textarea rows="4" placeholder="Doresc să programez un test drive sau să aflu mai multe despre..."></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary" style="border:none;cursor:pointer;">Trimite Mesajul</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="23" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <path d="M24 1 A23 23 0 0 1 47 24 L24 24 Z" fill="white"/>
+        <path d="M24 24 L47 24 A23 23 0 0 1 24 47 Z" fill="#1C69D4"/>
+        <path d="M24 47 A23 23 0 0 1 1 24 L24 24 Z" fill="white"/>
+        <path d="M24 24 L1 24 A23 23 0 0 1 24 1 Z" fill="#1C69D4"/>
+      </svg>
+      <p>Bayerische Motoren Werke AG. Perfecțiunea în mișcare din 1916. Proiectat la München, Creat pentru lume.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Modele</h5>
+      <a href="#models">Seria 3 / M3</a>
+      <a href="#models">Seria 5 / M5</a>
+      <a href="#models">Seria 7 / i7</a>
+      <a href="#models">X Series</a>
+      <a href="#models">M Series</a>
+    </div>
+    <div class="footer-col">
+      <h5>Companie</h5>
+      <a href="#about">Despre BMW</a>
+      <a href="#heritage">Istorie</a>
+      <a href="#technology">Inovație</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="#">Confidențialitate</a>
+      <a href="#">Termeni & Condiții</a>
+      <a href="#">Cookie-uri</a>
+      <a href="#">Dealer Locator</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Bayerische Motoren Werke AG. Toate drepturile rezervate.</span>
+    <span>Proiect educațional — Atestat Informatică</span>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .model-card, .swatch, .config-opt, .tech-tab').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Loader
+  setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 2000);
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Tech tabs
+  document.querySelectorAll('.tech-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tech-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tech-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Configurator
+  const bodyEl = document.getElementById('car-body');
+  function selectColor(el, color) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    // Interpolate color into SVG gradient
+    bodyEl.style.fill = color;
+    bodyEl.removeAttribute('fill');
+    bodyEl.style.fill = color;
+  }
+
+  function selectModel(el, model, hp, acc, engine, fuel) {
+    document.querySelectorAll('#model-opts .config-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('spec-hp').textContent = hp;
+    document.getElementById('spec-acc').textContent = acc + 's';
+    document.getElementById('spec-engine').textContent = engine;
+    document.getElementById('spec-fuel').textContent = fuel;
+    document.getElementById('car-label').textContent = 'BMW ' + model;
+  }
+
+  function selectInterior(el, name) {
+    document.querySelectorAll('#interior-opts .config-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function selectPack(el, name) {
+    document.querySelectorAll('#pack-opts .config-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('Mesajul a fost trimis! Echipa BMW România vă va contacta în curând.');
+  }
+
+  // Model cards visibility fix
+  document.querySelectorAll('.model-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.querySelector('.model-always-visible').style.opacity = '0';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.querySelector('.model-always-visible').style.opacity = '1';
+    });
+  });
+  document.querySelectorAll('.model-always-visible').forEach(el => {
+    el.style.transition = 'opacity 0.4s';
+  });
+</script>
+</body>
+</html>
